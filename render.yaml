@@ -9,3 +9,5 @@ services:
         value: production
       - key: PORT
         value: 10000
+      - key: TRAILER_FONT_PATH
+        value: /opt/render/project/src/fonts
