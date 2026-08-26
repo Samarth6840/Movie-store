@@ -17,6 +17,12 @@ const getProvider = (locale) => {
   return providerCache.get(locale.code);
 };
 
+router.get('/debug/fonts', async (_req, res) => {
+  const fontPath = process.env.TRAILER_FONT_PATH;
+  const cwd = process.cwd();
+  res.json({ fontPath, cwd, platform: process.platform });
+});
+
 router.get('/trailer/:seed/:locale/:index', async (req, res) => {
   try {
     const locales = await loadLocales();
@@ -69,6 +75,7 @@ router.get('/trailer/:seed/:locale/:index', async (req, res) => {
       res.send(buffer);
     }
   } catch (err) {
+    console.error('Trailer error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
