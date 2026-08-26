@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import TrailerPlayer from './TrailerPlayer.jsx';
 import LikeButton from './LikeButton.jsx';
 
-const BATCH_SIZE = 24;
+const BATCH_SIZE = 12;
 
 export default function GalleryView({ seed, locale, reviews }) {
   const [movies, setMovies] = useState([]);

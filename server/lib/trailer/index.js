@@ -14,8 +14,8 @@ const FPS = 12;
 const WIDTH = 640;
 const HEIGHT = 360;
 
-const POSTER_WIDTH = 854;
-const POSTER_HEIGHT = 480;
+const POSTER_WIDTH = 640;
+const POSTER_HEIGHT = 360;
 
 const MAX_DURATION = 5;
 
