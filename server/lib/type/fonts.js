@@ -14,7 +14,8 @@ const extraPaths = () =>
   (process.env.TRAILER_FONT_PATH ?? '')
     .split(path.delimiter)
     .map((entry) => entry.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .map((p) => path.resolve(p));
 
 const PREFERRED = [
   'impact',
