@@ -10,9 +10,9 @@ import { renderPosterWithTitle } from './poster.js';
 import { DiskCache, cacheKey } from './cache.js';
 import { faceLibrary } from '../type/fonts.js';
 
-const FPS = 12;
-const WIDTH = 640;
-const HEIGHT = 360;
+const FPS = 8;
+const WIDTH = 480;
+const HEIGHT = 270;
 
 const POSTER_WIDTH = 640;
 const POSTER_HEIGHT = 360;
@@ -53,25 +53,8 @@ export const renderTrailer = async ({ seed, localeCode, globalIndex, movie, loca
 
   const videoBuffer = await encodeVideo(frameIterator, { width: WIDTH, height: HEIGHT, fps: FPS });
 
-  const audioCtx = createContext(provider, seed, localeCode, 'trailer', globalIndex, 'audio');
-  const audioBuffer = synthesiseScore({
-    key: script.audio.key,
-    tempo: script.audio.tempo,
-    mood: script.audio.mood,
-    duration: script.audio.duration,
-    seed: Number(audioCtx.seed & 0xffffffffn),
-  });
-
-  let finalBuffer;
-  try {
-    finalBuffer = await mergeAudio(videoBuffer, audioBuffer);
-  } catch {
-    
-    finalBuffer = videoBuffer;
-  }
-
-  await disk.set(key, '.mp4', finalBuffer);
-  return finalBuffer;
+  await disk.set(key, '.mp4', videoBuffer);
+  return videoBuffer;
 };
 
 export const renderPoster = async ({ seed, localeCode, globalIndex, movie, locale, provider }) => {

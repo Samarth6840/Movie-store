@@ -22,7 +22,7 @@ export const encodeVideo = async (frames, { width, height, fps }) => {
         '-i', 'pipe:0',
         '-c:v', 'libx264',
         '-preset', 'ultrafast',
-        '-crf', '32',
+        '-crf', '35',
         '-pix_fmt', 'yuv420p',
         '-an',
         '-movflags', '+faststart',
