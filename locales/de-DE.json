@@ -1,0 +1,203 @@
+{
+  "code": "de-DE",
+  "label": "Deutsch (Deutschland)",
+  "flag": "🇩🇪",
+  "fakerLocale": ["de", "base"],
+  "casing": {
+    "mode": "preserve"
+  },
+  "grammar": {
+    "definite": { "m": "Der", "f": "Die", "n": "Das", "p": "Die" },
+    "indefinite": { "m": "Ein", "f": "Eine", "n": "Ein" },
+    "indefinitePlural": ""
+  },
+  "words": {
+    "nouns": [
+      { "text": "Himmel", "plural": "Himmel", "gender": "m" },
+      { "text": "Sturm", "plural": "Stürme", "gender": "m" },
+      { "text": "Schatten", "plural": "Schatten", "gender": "m" },
+      { "text": "Wald", "plural": "Wälder", "gender": "m" },
+      { "text": "Spiegel", "plural": "Spiegel", "gender": "m" },
+      { "text": "König", "plural": "Könige", "gender": "m" },
+      { "text": "Verrat", "plural": "Verrate", "gender": "m" },
+      { "text": "Nacht", "plural": "Nächte", "gender": "f" },
+      { "text": "Stadt", "plural": "Städte", "gender": "f" },
+      { "text": "Grenze", "plural": "Grenzen", "gender": "f" },
+      { "text": "Wahrheit", "plural": "Wahrheiten", "gender": "f" },
+      { "text": "Insel", "plural": "Inseln", "gender": "f" },
+      { "text": "Krone", "plural": "Kronen", "gender": "f" },
+      { "text": "Jagd", "plural": "Jagden", "gender": "f" },
+      { "text": "Herz", "plural": "Herzen", "gender": "n" },
+      { "text": "Feuer", "plural": "Feuer", "gender": "n" },
+      { "text": "Versprechen", "plural": "Versprechen", "gender": "n" },
+      { "text": "Königreich", "plural": "Königreiche", "gender": "n" },
+      { "text": "Gewitter", "plural": "Gewitter", "gender": "n" },
+      { "text": "Labyrinth", "plural": "Labyrinthe", "gender": "n" },
+      { "text": "Leuchtturm", "plural": "Leuchttürme", "gender": "m" },
+      { "text": "Abgrund", "plural": "Abgründe", "gender": "m" }
+    ],
+    "abstracts": [
+      { "text": "Stille", "gender": "f" },
+      { "text": "Furcht", "gender": "f" },
+      { "text": "Sehnsucht", "gender": "f" },
+      { "text": "Gnade", "gender": "f" },
+      { "text": "Schwerkraft", "gender": "f" },
+      { "text": "Zorn", "gender": "m" },
+      { "text": "Verfall", "gender": "m" },
+      { "text": "Schweigen", "gender": "n" },
+      { "text": "Vergessen", "gender": "n" },
+      { "text": "Chaos", "gender": "n" }
+    ],
+    "adjectives": [
+      { "base": "kalt", "forms": {
+        "strong": { "m": "Kalter", "f": "Kalte", "n": "Kaltes", "p": "Kalte" },
+        "weak": { "m": "kalte", "f": "kalte", "n": "kalte", "p": "kalten" } } },
+      { "base": "dunkel", "forms": {
+        "strong": { "m": "Dunkler", "f": "Dunkle", "n": "Dunkles", "p": "Dunkle" },
+        "weak": { "m": "dunkle", "f": "dunkle", "n": "dunkle", "p": "dunklen" } } },
+      { "base": "letzt", "forms": {
+        "strong": { "m": "Letzter", "f": "Letzte", "n": "Letztes", "p": "Letzte" },
+        "weak": { "m": "letzte", "f": "letzte", "n": "letzte", "p": "letzten" } } },
+      { "base": "golden", "forms": {
+        "strong": { "m": "Goldener", "f": "Goldene", "n": "Goldenes", "p": "Goldene" },
+        "weak": { "m": "goldene", "f": "goldene", "n": "goldene", "p": "goldenen" } } },
+      { "base": "still", "forms": {
+        "strong": { "m": "Stiller", "f": "Stille", "n": "Stilles", "p": "Stille" },
+        "weak": { "m": "stille", "f": "stille", "n": "stille", "p": "stillen" } } },
+      { "base": "wild", "forms": {
+        "strong": { "m": "Wilder", "f": "Wilde", "n": "Wildes", "p": "Wilde" },
+        "weak": { "m": "wilde", "f": "wilde", "n": "wilde", "p": "wilden" } } },
+      { "base": "gebrochen", "forms": {
+        "strong": { "m": "Gebrochener", "f": "Gebrochene", "n": "Gebrochenes", "p": "Gebrochene" },
+        "weak": { "m": "gebrochene", "f": "gebrochene", "n": "gebrochene", "p": "gebrochenen" } } },
+      { "base": "ewig", "forms": {
+        "strong": { "m": "Ewiger", "f": "Ewige", "n": "Ewiges", "p": "Ewige" },
+        "weak": { "m": "ewige", "f": "ewige", "n": "ewige", "p": "ewigen" } } },
+      { "base": "verloren", "forms": {
+        "strong": { "m": "Verlorener", "f": "Verlorene", "n": "Verlorenes", "p": "Verlorene" },
+        "weak": { "m": "verlorene", "f": "verlorene", "n": "verlorene", "p": "verlorenen" } } },
+      { "base": "eisern", "forms": {
+        "strong": { "m": "Eiserner", "f": "Eiserne", "n": "Eisernes", "p": "Eiserne" },
+        "weak": { "m": "eiserne", "f": "eiserne", "n": "eiserne", "p": "eisernen" } } },
+      { "base": "blutig", "forms": {
+        "strong": { "m": "Blutiger", "f": "Blutige", "n": "Blutiges", "p": "Blutige" },
+        "weak": { "m": "blutige", "f": "blutige", "n": "blutige", "p": "blutigen" } } },
+      { "base": "fern", "forms": {
+        "strong": { "m": "Ferner", "f": "Ferne", "n": "Fernes", "p": "Ferne" },
+        "weak": { "m": "ferne", "f": "ferne", "n": "ferne", "p": "fernen" } } }
+    ],
+    "places": [
+      { "text": "Schwarzwasser" },
+      { "text": "Neustadt" },
+      { "text": "Eisenberg" },
+      { "text": "der Nordsee" },
+      { "text": "Falkenstein" },
+      { "text": "Mühlgraben" },
+      { "text": "Osthafen" },
+      { "text": "Tannheim" }
+    ],
+    "gerunds": [
+      { "text": "Das Fallen" },
+      { "text": "Das Brennen" },
+      { "text": "Das Warten" },
+      { "text": "Das Erwachen" },
+      { "text": "Das Verschwinden" }
+    ],
+    "numbers": [
+      { "text": "Null" },
+      { "text": "Sieben" },
+      { "text": "Tausend" },
+      { "text": "Neunundneunzig" }
+    ],
+    "ordinals": [
+      { "text": "Erste" },
+      { "text": "Letzte" },
+      { "text": "Zweite" }
+    ]
+  },
+  "patterns": [
+    { "template": "{DEF:1} {ADJ:1} {NOUN:1}", "weight": 9 },
+    { "template": "{ADJ:1} {PLURAL:1}", "weight": 5 },
+    { "template": "{NOUN:1} der {ABSTRACT:2}", "weight": 5 },
+    { "template": "{DEF:1} {NOUN:1} von {PLACE:2}", "weight": 4 },
+    { "template": "{ABSTRACT:1}", "weight": 3 },
+    { "template": "{GERUND:1}", "weight": 2 },
+    { "template": "{NOUN:1} {NUM:2}", "weight": 2 },
+    { "template": "Rückkehr nach {PLACE:1}", "weight": 2 },
+    { "template": "{DEF:1} {ORD:1} {NOUN:1}", "weight": 3 },
+    { "template": "{ADJ:2} {ABSTRACT:2}", "weight": 3 }
+  ],
+  "genres": [
+    { "value": "Actionfilm", "weight": 10 },
+    { "value": "Drama", "weight": 12 },
+    { "value": "Komödie", "weight": 10 },
+    { "value": "Thriller", "weight": 8 },
+    { "value": "Science-Fiction", "weight": 7 },
+    { "value": "Horrorfilm", "weight": 6 },
+    { "value": "Liebesfilm", "weight": 6 },
+    { "value": "Fantasy", "weight": 6 },
+    { "value": "Krimi", "weight": 7 },
+    { "value": "Dokumentarfilm", "weight": 3 },
+    { "value": "Animationsfilm", "weight": 4 },
+    { "value": "Western", "weight": 2 },
+    { "value": "Abenteuerfilm", "weight": 6 },
+    { "value": "Familienfilm", "weight": 5 }
+  ],
+  "certifications": ["FSK 0", "FSK 6", "FSK 12", "FSK 16", "FSK 18"],
+  "reviews": {
+    "positive": [
+      "Ein atemberaubendes Werk — {name} inszeniert mit vollkommener Sicherheit.",
+      "Der Grund, warum das Kino noch immer zählt. Grandios.",
+      "Wild gespielt und zugleich zutiefst zärtlich. Es lässt mich nicht los.",
+      "Jede Einstellung gehört in eine Galerie. Ein Karrierehöhepunkt.",
+      "Kühn, seltsam und vollkommen lebendig. Zweimal ansehen.",
+      "Ein Donnerschlag von einem Film. Der Saal war danach still."
+    ],
+    "mixed": [
+      "Optisch überwältigend, doch emotional auf Distanz.",
+      "Ein halbes Meisterwerk. Der dritte Akt fehlt schlicht.",
+      "Ehrgeizig bis zum Fehler — wenn es trägt, dann fliegt es.",
+      "Die Darsteller übertreffen das Drehbuch bei Weitem.",
+      "Viel Stil, wenig darunter, aber was für ein Stil."
+    ],
+    "negative": [
+      "Schön anzusehen und todlangweilig. Zwei verlorene Stunden.",
+      "Nur Spektakel, kein Puls. Ich sah viermal auf die Uhr.",
+      "Nichts ergibt einen Sinn, und nicht im guten Sinne.",
+      "Laut, hohl und seltsam stolz auf sich selbst.",
+      "Ich wollte ihn lieben. Er ließ es nicht zu."
+    ]
+  },
+  "synopses": [
+    "{DEF:1} {ADJ:1} {NOUN:1} kehrt zurück, und eine alte Schuld kehrt mit.",
+    "{ABSTRACT:1} breitet sich aus, und niemand weiß, warum.",
+    "{GIVEN:1} dachte, alles sei vorbei — bis {DEF:2:lc} {ADJ:2} {NOUN:2} erschien.",
+    "In {PLACE:1} zählt nur noch {ABSTRACT:2}, und jede Stunde wird kostbarer.",
+    "{DEF:1} {NOUN:1} ist erwacht. Diesmal gibt es kein Zurück.",
+    "Zwischen {PLACE:1} und {PLACE:2} liegt eine Wahrheit, die alles verändert.",
+    "Kaum jemand ahnt, was {DEF:1:lc} {ADJ:1} {NOUN:1} verbirgt — und warum.",
+    "{ABSTRACT:1} ist geblieben, und die Zeit läuft unaufhaltsam ab."
+  ],
+  "taglines": [
+    "Manche Türen bleiben besser geschlossen.",
+    "Jede Legende fordert ihren Preis.",
+    "Eine Wahl. Kein Zurück.",
+    "Das Ende beginnt hier.",
+    "Willkommen in {PLACE:1}.",
+    "Niemand bleibt lange in {PLACE:1}.",
+    "Die Angst hat einen neuen Namen.",
+    "Was du beginnst, holt dich ein."
+  ],
+  "outlets": [
+    "Der Filmspiegel",
+    "Leinwand & Ton",
+    "Nachtkino",
+    "Die Kinozeit",
+    "Filmdienst Wochen",
+    "Das Premierenblatt",
+    "Kino Kurier",
+    "Der Vorführraum"
+  ],
+  "companySuffixes": ["Film", "Studios", "Bilder", "Produktion", "Medien"],
+  "directors": { "titles": [], "connector": "" }
+}

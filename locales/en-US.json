@@ -1,0 +1,202 @@
+{
+  "code": "en-US",
+  "label": "English (US)",
+  "flag": "🇺🇸",
+  "fakerLocale": ["en_US", "en", "base"],
+  "casing": {
+    "mode": "title",
+    "minorWords": ["a", "an", "the", "and", "or", "of", "in", "on", "to", "for", "with", "at", "by", "from"]
+  },
+  "grammar": {
+    "definite": { "m": "the", "f": "the", "n": "the", "p": "the" },
+    "indefinite": { "m": "a", "f": "a", "n": "a" },
+    "indefinitePlural": ""
+  },
+  "words": {
+    "nouns": [
+      { "text": "Empire", "plural": "Empires", "gender": "n" },
+      { "text": "Horizon", "plural": "Horizons", "gender": "n" },
+      { "text": "Promise", "plural": "Promises", "gender": "n" },
+      { "text": "Shadow", "plural": "Shadows", "gender": "n" },
+      { "text": "Machine", "plural": "Machines", "gender": "n" },
+      { "text": "Kingdom", "plural": "Kingdoms", "gender": "n" },
+      { "text": "Winter", "plural": "Winters", "gender": "n" },
+      { "text": "Harbor", "plural": "Harbors", "gender": "n" },
+      { "text": "Signal", "plural": "Signals", "gender": "n" },
+      { "text": "Verdict", "plural": "Verdicts", "gender": "n" },
+      { "text": "Cathedral", "plural": "Cathedrals", "gender": "n" },
+      { "text": "Frontier", "plural": "Frontiers", "gender": "n" },
+      { "text": "Lighthouse", "plural": "Lighthouses", "gender": "n" },
+      { "text": "Requiem", "plural": "Requiems", "gender": "n" },
+      { "text": "Circuit", "plural": "Circuits", "gender": "n" },
+      { "text": "Garden", "plural": "Gardens", "gender": "n" },
+      { "text": "Compass", "plural": "Compasses", "gender": "n" },
+      { "text": "Mirror", "plural": "Mirrors", "gender": "n" },
+      { "text": "Avalanche", "plural": "Avalanches", "gender": "n" },
+      { "text": "Reckoning", "plural": "Reckonings", "gender": "n" },
+      { "text": "Serpent", "plural": "Serpents", "gender": "n" },
+      { "text": "Lantern", "plural": "Lanterns", "gender": "n" },
+      { "text": "Testament", "plural": "Testaments", "gender": "n" },
+      { "text": "Undertow", "plural": "Undertows", "gender": "n" }
+    ],
+    "abstracts": [
+      { "text": "Silence", "gender": "n" },
+      { "text": "Gravity", "gender": "n" },
+      { "text": "Fury", "gender": "n" },
+      { "text": "Grace", "gender": "n" },
+      { "text": "Oblivion", "gender": "n" },
+      { "text": "Mercy", "gender": "n" },
+      { "text": "Nostalgia", "gender": "n" },
+      { "text": "Momentum", "gender": "n" },
+      { "text": "Static", "gender": "n" },
+      { "text": "Vertigo", "gender": "n" }
+    ],
+    "adjectives": [
+      { "base": "Crimson", "forms": { "strong": { "m": "Crimson", "f": "Crimson", "n": "Crimson", "p": "Crimson" } } },
+      { "base": "Hollow" },
+      { "base": "Electric" },
+      { "base": "Silent" },
+      { "base": "Broken" },
+      { "base": "Golden" },
+      { "base": "Distant" },
+      { "base": "Savage" },
+      { "base": "Velvet" },
+      { "base": "Frozen" },
+      { "base": "Restless" },
+      { "base": "Radiant" },
+      { "base": "Midnight" },
+      { "base": "Forgotten" },
+      { "base": "Relentless" },
+      { "base": "Luminous" },
+      { "base": "Feral" },
+      { "base": "Sacred" }
+    ],
+    "places": [
+      { "text": "Blackwater" },
+      { "text": "New Aurora" },
+      { "text": "the Ninth Ward" },
+      { "text": "Ironhold" },
+      { "text": "Cedar Falls" },
+      { "text": "the Pacific" },
+      { "text": "Marrow Bay" },
+      { "text": "Route 9" },
+      { "text": "the Delta" },
+      { "text": "Ashford" }
+    ],
+    "gerunds": [
+      { "text": "Falling" },
+      { "text": "Burning" },
+      { "text": "Waiting" },
+      { "text": "Chasing" },
+      { "text": "Breaking" },
+      { "text": "Drowning" },
+      { "text": "Rising" },
+      { "text": "Vanishing" }
+    ],
+    "numbers": [
+      { "text": "Zero" },
+      { "text": "Seven" },
+      { "text": "Ninety-Nine" },
+      { "text": "One Thousand" },
+      { "text": "Twelve" }
+    ],
+    "ordinals": [
+      { "text": "First" },
+      { "text": "Last" },
+      { "text": "Final" },
+      { "text": "Second" }
+    ]
+  },
+  "patterns": [
+    { "template": "{ADJ:1} {NOUN:1}", "weight": 8 },
+    { "template": "The {ADJ:1} {NOUN:1}", "weight": 6 },
+    { "template": "{NOUN:1} of {ABSTRACT:2}", "weight": 5 },
+    { "template": "{ADJ:1} {PLURAL:1}", "weight": 4 },
+    { "template": "The {NOUN:1} of {PLACE:2}", "weight": 4 },
+    { "template": "{GERUND:1} {PLACE:2}", "weight": 3 },
+    { "template": "{ABSTRACT:1}", "weight": 3 },
+    { "template": "{NOUN:1} {NUM:2}", "weight": 2 },
+    { "template": "The {ORD:1} {NOUN:2}", "weight": 3 },
+    { "template": "{ADJ:2} {ABSTRACT:2}", "weight": 4 },
+    { "template": "{NAME:1}", "weight": 2 },
+    { "template": "Return to {PLACE:1}", "weight": 2 }
+  ],
+  "genres": [
+    { "value": "Action", "weight": 10 },
+    { "value": "Drama", "weight": 12 },
+    { "value": "Comedy", "weight": 10 },
+    { "value": "Thriller", "weight": 8 },
+    { "value": "Science Fiction", "weight": 7 },
+    { "value": "Horror", "weight": 6 },
+    { "value": "Romance", "weight": 6 },
+    { "value": "Fantasy", "weight": 6 },
+    { "value": "Mystery", "weight": 5 },
+    { "value": "Documentary", "weight": 3 },
+    { "value": "Animation", "weight": 4 },
+    { "value": "Western", "weight": 2 },
+    { "value": "Crime", "weight": 6 },
+    { "value": "Adventure", "weight": 7 },
+    { "value": "Family", "weight": 5 }
+  ],
+  "certifications": ["G", "PG", "PG-13", "R", "NC-17"],
+  "reviews": {
+    "positive": [
+      "A staggering achievement — {name} directs with total command of the frame.",
+      "The kind of film that reminds you why the big screen still matters.",
+      "Ferociously acted and impossibly tender. I haven't stopped thinking about it.",
+      "Every frame belongs in a gallery. A career-best from the entire cast.",
+      "Bold, strange, and completely alive. See it twice.",
+      "A thunderclap of a movie. The last act left the whole theater silent.",
+      "Gorgeous, devastating, and wickedly funny when it needs to be.",
+      "Proof that blockbusters can still have a soul."
+    ],
+    "mixed": [
+      "Visually sumptuous but emotionally distant — a beautiful shell.",
+      "Half of a masterpiece. The other half forgot to write a third act.",
+      "Ambitious to a fault. When it lands, it soars; when it doesn't, it drags.",
+      "The performances outclass the script by a country mile.",
+      "Style to burn and not much underneath it, but what a style.",
+      "Overlong and uneven, yet somehow I'd watch it again."
+    ],
+    "negative": [
+      "A handsome bore. Two hours I would like returned.",
+      "All spectacle, no pulse. I checked my watch four times.",
+      "None of it makes any sense, and not in the fun way.",
+      "The trailer promised a movie. This is a screensaver with names.",
+      "Loud, hollow, and weirdly proud of itself.",
+      "I wanted to love it. It would not let me."
+    ]
+  },
+  "synopses": [
+    "A {ADJ:1:lc} {NOUN:1:lc} returns to {PLACE:2} to bury a secret that refuses to stay buried.",
+    "When {ABSTRACT:1:lc} sweeps through {PLACE:2}, one family must outrun the {NOUN:3:lc} they set in motion.",
+    "Two strangers, a stolen {NOUN:1:lc}, and a single night to cross {PLACE:2} before the sirens find them.",
+    "{GIVEN:1} believed the war was over — until the {NOUN:2:lc} on the horizon proved otherwise.",
+    "Out past {PLACE:1}, {ABSTRACT:2:lc} is the only currency left, and every debt is coming due at once.",
+    "A forgotten {NOUN:1:lc} is all that stands between {CITY:2} and total {ABSTRACT:3:lc}.",
+    "{GIVEN:1} has one week, one witness, and a {ADJ:2:lc} {NOUN:2:lc} nobody else can see.",
+    "They buried the {NOUN:1:lc} out near {PLACE:2} for a reason. This winter, it comes back up."
+  ],
+  "taglines": [
+    "Some doors are meant to stay closed.",
+    "Every legend earns its reckoning.",
+    "One choice. No way back.",
+    "The end starts here.",
+    "Welcome to {PLACE:1}.",
+    "Not everyone walks out of {PLACE:1}.",
+    "You cannot outrun what you started.",
+    "Fear learned a new name."
+  ],
+  "outlets": [
+    "The Frame",
+    "Reel Report",
+    "Screen & Sound",
+    "The Marquee",
+    "Cinema Dispatch",
+    "Nightreel",
+    "The Reserve Seat",
+    "Matinee Weekly"
+  ],
+  "companySuffixes": ["Pictures", "Studios", "Films", "Media", "Entertainment"],
+  "directors": { "titles": [], "connector": "" }
+}
