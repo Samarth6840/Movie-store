@@ -10,12 +10,15 @@ const SEARCH_PATHS = {
   win32: ['C:\\Windows\\Fonts'],
 };
 
-const extraPaths = () =>
-  (process.env.TRAILER_FONT_PATH ?? '')
+const extraPaths = () => {
+  const envPaths = (process.env.TRAILER_FONT_PATH ?? '')
     .split(path.delimiter)
     .map((entry) => entry.trim())
     .filter(Boolean)
     .map((p) => path.resolve(p));
+  const localFonts = path.resolve(process.cwd(), 'fonts');
+  return [...envPaths, localFonts];
+};
 
 const PREFERRED = [
   'impact',
