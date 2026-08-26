@@ -1,7 +1,8 @@
 
-import { createFrame } from '../paint/frame.js';
-import { letterbox } from '../paint/grade.js';
+import { createFrame, copyInto, dissolve } from '../paint/frame.js';
+import { bakeGrade, applyGrade, letterbox } from '../paint/grade.js';
 import { buildScene } from '../scene/scene.js';
+import { GRADES } from '../paint/grade.js';
 import { renderTitleCard, renderBillingCards } from './animator.js';
 
 export const compositeFrame = (
@@ -17,6 +18,8 @@ export const compositeFrame = (
   prevShot = null,
 ) => {
   const timeSeconds = frameIndex / fps;
+  const grade = GRADES.find((g) => g.name === script.grade) ?? GRADES[0];
+  const gradeTable = bakeGrade(grade);
 
   let elapsed = 0;
   let shot = script.shots[0];
@@ -53,6 +56,22 @@ export const compositeFrame = (
   if (shot.billingCards && shot.billingCards.length > 0) {
     renderBillingCards(frame, shot.billingCards, shotProgress);
   }
+
+  if (shot.transition && prevShot && shot.transition.type === 'dissolve') {
+    const transStart = shot.duration - shot.transition.duration;
+    if (shotProgress >= transStart / shot.duration) {
+      const blend = (shotProgress - transStart / shot.duration) / (shot.transition.duration / shot.duration);
+      dissolve(frame, prevShot, 1 - blend);
+    }
+  }
+
+  applyGrade(frame, gradeTable, {
+    saturation: grade.saturation,
+    vignette: 0,
+    grain: 0,
+    frameIndex,
+    exposure: 1.05,
+  });
 
   letterbox(frame, 2.39);
 };
