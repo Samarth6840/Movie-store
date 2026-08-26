@@ -2,10 +2,10 @@
 import { SCENE_NAMES, SCENES } from '../scene/scene.js';
 import { GRADES } from '../paint/grade.js';
 
-const SHOT_DURATION_MIN = 2.0;
-const SHOT_DURATION_MAX = 3.0;
+const SHOT_DURATION_MIN = 1.5;
+const SHOT_DURATION_MAX = 2.0;
 
-const TITLE_HOLD = 3.0;
+const TITLE_HOLD = 2.0;
 
 const TRANSITION_MIN = 0.4;
 const TRANSITION_MAX = 0.9;
@@ -29,7 +29,7 @@ const MOODS = ['epic', 'dark', 'ethereal', 'driving'];
 const KEYS = ['C', 'D', 'E', 'F', 'G', 'A', 'Bb'];
 
 export const scriptFor = (ctx, movie, faces = []) => {
-  const shotCount = ctx.int('shotCount', 2, 3);
+  const shotCount = ctx.int('shotCount', 2, 2);
 
   const scenePool = ctx.shuffle('sceneOrder', [...SCENE_NAMES]);
   const scenes = scenePool.slice(0, shotCount);

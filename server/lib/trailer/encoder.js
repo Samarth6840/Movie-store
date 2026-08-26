@@ -7,14 +7,12 @@ import path from 'node:path';
 
 export const encodeVideo = async (frames, { width, height, fps }) => {
   const tmpDir = await mkdtemp(path.join(tmpdir(), 'trailer-'));
-  const tsPath = path.join(tmpDir, 'raw.ts');
   const mp4Path = path.join(tmpDir, 'out.mp4');
 
   try {
     const frameStream = Readable.from(frames);
 
-    
-    const tsResult = await new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       const ff = spawn('ffmpeg', [
         '-y',
         '-f', 'rawvideo',
@@ -24,34 +22,9 @@ export const encodeVideo = async (frames, { width, height, fps }) => {
         '-i', 'pipe:0',
         '-c:v', 'libx264',
         '-preset', 'ultrafast',
-        '-crf', '28',
+        '-crf', '32',
         '-pix_fmt', 'yuv420p',
         '-an',
-        '-f', 'mpegts',
-        'pipe:1',
-      ], { stdio: ['pipe', 'pipe', 'pipe'] });
-
-      const chunks = [];
-      let stderr = '';
-      ff.stdout.on('data', (c) => chunks.push(c));
-      ff.stderr.on('data', (c) => { stderr += c.toString(); });
-      ff.on('close', (code) => {
-        if (code === 0) resolve({ data: Buffer.concat(chunks) });
-        else reject(new Error(`ffmpeg encode failed (code ${code}): ${stderr.slice(-300)}`));
-      });
-      ff.on('error', reject);
-      ff.stdin.on('error', () => {});
-      frameStream.pipe(ff.stdin);
-    });
-
-    await writeFile(tsPath, tsResult.data);
-
-    
-    const remuxResult = await new Promise((resolve, reject) => {
-      const ff = spawn('ffmpeg', [
-        '-y',
-        '-i', tsPath,
-        '-c', 'copy',
         '-movflags', '+faststart',
         '-f', 'mp4',
         mp4Path,
@@ -61,10 +34,11 @@ export const encodeVideo = async (frames, { width, height, fps }) => {
       ff.stderr.on('data', (c) => { stderr += c.toString(); });
       ff.on('close', (code) => {
         if (code === 0) resolve();
-        else reject(new Error(`ffmpeg remux failed (code ${code}): ${stderr.slice(-300)}`));
+        else reject(new Error(`ffmpeg encode failed (code ${code}): ${stderr.slice(-300)}`));
       });
       ff.on('error', reject);
-      ff.stdin.end();
+      ff.stdin.on('error', () => {});
+      frameStream.pipe(ff.stdin);
     });
 
     return await readFile(mp4Path);
@@ -85,14 +59,14 @@ export const mergeAudio = async (videoBuffer, audioBuffer) => {
       writeFile(audioPath, audioBuffer),
     ]);
 
-    const result = await new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       const ff = spawn('ffmpeg', [
         '-y',
         '-i', inPath,
         '-i', audioPath,
         '-c:v', 'copy',
         '-c:a', 'aac',
-        '-b:a', '128k',
+        '-b:a', '64k',
         '-shortest',
         '-movflags', '+faststart',
         '-f', 'mp4',

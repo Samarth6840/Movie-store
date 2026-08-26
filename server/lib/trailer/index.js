@@ -10,9 +10,9 @@ import { renderPosterWithTitle } from './poster.js';
 import { DiskCache, cacheKey } from './cache.js';
 import { faceLibrary } from '../type/fonts.js';
 
-const FPS = 24;
-const WIDTH = 854;
-const HEIGHT = 480;
+const FPS = 12;
+const WIDTH = 640;
+const HEIGHT = 360;
 
 const POSTER_WIDTH = 854;
 const POSTER_HEIGHT = 480;

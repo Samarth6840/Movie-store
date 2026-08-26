@@ -108,11 +108,6 @@ export const compositeFrame = (
     exposure: 1.05,
   });
 
-  if (frameIndex % 5 === 0) {
-    applyBloom(frame, scratch, blur, { threshold: 210, strength: 0.3, radius: 8 });
-  }
-
-  applyAberration(frame, 0.3);
   letterbox(frame, 2.39);
 };
 
