@@ -8,6 +8,7 @@ import movieRoutes from './routes/movies.js';
 import trailerRoutes from './routes/trailer.js';
 import posterRoutes from './routes/poster.js';
 import exportRoutes from './routes/export.js';
+import cacheRoutes from './routes/cache.js';
 import { preGeneratePosters } from './lib/pregen.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +22,7 @@ app.use('/api', movieRoutes);
 app.use('/api', trailerRoutes);
 app.use('/api', posterRoutes);
 app.use('/api', exportRoutes);
+app.use('/api', cacheRoutes);
 
 
 const clientDist = path.join(__dirname, '..', 'client', 'dist');

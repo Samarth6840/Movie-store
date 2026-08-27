@@ -17,6 +17,68 @@ import { createFrame, compositeMask, compositeMaskShaded, blendPixel, smoothstep
 import { createMask, addPolygon, resolveMask } from '../type/raster.js';
 import { layoutLine } from '../type/layout.js';
 
+const GLYPH_MASK_CACHE = new Map();
+const GLYPH_MASK_CACHE_MAX = 8192;
+let glyphMaskCacheOrder = [];
+
+const glyphMaskKey = (font, char, size, tracking, scaleBucket) => {
+  let byFont = GLYPH_MASK_CACHE.get(font);
+  if (byFont) {
+    const byChar = byFont.get(char);
+    if (byChar) {
+      const byScale = byChar.get(`${size}:${tracking}`);
+      if (byScale) {
+        const entry = byScale.get(String(scaleBucket));
+        if (entry) return entry;
+      }
+    }
+  }
+  return null;
+};
+
+const storeGlyphMask = (font, char, size, tracking, scaleBucket, mask) => {
+  let byFont = GLYPH_MASK_CACHE.get(font);
+  if (!byFont) { byFont = new Map(); GLYPH_MASK_CACHE.set(font, byFont); }
+  let byChar = byFont.get(char);
+  if (!byChar) { byChar = new Map(); byFont.set(char, byChar); }
+  const config = `${size}:${tracking}`;
+  let byScale = byChar.get(config);
+  if (!byScale) { byScale = new Map(); byChar.set(config, byScale); }
+  if (byScale.size >= 6) {
+    const oldest = byScale.keys().next().value;
+    byScale.delete(oldest);
+  }
+  byScale.set(String(scaleBucket), mask);
+  glyphMaskCacheOrder.push([font, char, config, String(scaleBucket)]);
+  if (glyphMaskCacheOrder.length > GLYPH_MASK_CACHE_MAX) {
+    const evicted = glyphMaskCacheOrder.shift();
+    const [ef, ec, ecfg, esb] = evicted;
+    ef && GLYPH_MASK_CACHE.get(ef)?.get(ec)?.get(ecfg)?.delete(esb);
+  }
+};
+
+const scaleBucket = (scale) => (scale > 1.001 || scale < 0.999 ? Math.round(scale * 20) / 20 : 1);
+
+const rasterMaskForGlyph = (glyph, font, char, scale, size, tracking) => {
+  const bucket = scaleBucket(scale);
+  const cached = glyphMaskKey(font, char, size, tracking, bucket);
+  if (cached) return cached;
+
+  const maskWidth = Math.ceil(glyph.advance * scale) + 8;
+  const maskHeight = Math.ceil(size * scale) + 8;
+  const mask = { width: maskWidth, height: maskHeight, stride: maskWidth + 2, area: new Float32Array((maskWidth + 2) * maskHeight) };
+  for (const contour of glyph.contours) {
+    addPolygon(mask, contour.map((pt) => ({
+      x: pt.x * scale + 4,
+      y: -pt.y * scale + 4,
+    })));
+  }
+  const coverage = resolveMask(mask);
+  const result = { coverage, width: maskWidth, height: maskHeight };
+  storeGlyphMask(font, char, size, tracking, bucket, result);
+  return result;
+};
+
 /** Per-glyph transforms that the compositor can read. */
 /**
  * @param {number} t Progress in `[0, 1]`.
@@ -136,27 +198,12 @@ export const renderAnimatedText = (
     const transform = glyphTransform(t, i, layout.glyphs.length, animation);
     if (transform.opacity <= 0.01) continue;
 
-    const polygons = glyph.contours.map((contour) =>
-      contour.map((pt) => {
-        const gx = ox + glyph.x + pt.x * transform.scale + transform.x;
-        const gy = oy - pt.y * transform.scale - layout.ascent + transform.y;
-        return { x: Math.round(gx), y: Math.round(gy) };
-      }),
-    );
-
-    const maskWidth = Math.ceil(glyph.advance * transform.scale) + 8;
-    const maskHeight = Math.ceil(size * transform.scale) + 8;
-    const mask = { width: maskWidth, height: maskHeight, stride: maskWidth + 2, area: new Float32Array((maskWidth + 2) * maskHeight) };
-    for (const polygon of polygons) {
-      addPolygon(mask, polygon.map((pt) => ({
-        x: pt.x - Math.round(ox + glyph.x) + 4,
-        y: pt.y - Math.round(oy - layout.ascent) + 4,
-      })));
-    }
-    const coverage = resolveMask(mask);
-    compositeMask(frame, { coverage, width: maskWidth, height: maskHeight }, color, {
-      x: Math.round(ox + glyph.x) - 4,
-      y: Math.round(oy - layout.ascent) - 4,
+    // Rasterise each glyph's coverage mask once per (font, char, size, tracking,
+    // scale) and reuse it across frames; only the composite below varies per frame.
+    const mask = rasterMaskForGlyph(glyph, font, glyph.text, transform.scale, size, tracking);
+    compositeMask(frame, mask, color, {
+      x: Math.round(ox + glyph.x + transform.x) - 4,
+      y: Math.round(oy - layout.ascent + transform.y) - 4,
       alpha: transform.opacity,
     });
   }

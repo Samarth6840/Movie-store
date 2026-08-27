@@ -59,7 +59,20 @@ const flattenContour = (points, place) => {
   return polyline;
 };
 
+const layoutCache = new WeakMap();
+
+const layoutKey = (text, size, tracking) => `${size}:${tracking}:${text}`;
+
 export const layoutLine = (font, text, { size, tracking = 0 }) => {
+  let byFont = layoutCache.get(font);
+  if (!byFont) {
+    byFont = new Map();
+    layoutCache.set(font, byFont);
+  }
+  const key = layoutKey(text, size, tracking);
+  const cached = byFont.get(key);
+  if (cached) return cached;
+
   const scale = size / font.unitsPerEm;
   const place = ({ x, y }) => ({ x: x * scale, y: y * scale });
   const extra = tracking * size;
@@ -78,7 +91,7 @@ export const layoutLine = (font, text, { size, tracking = 0 }) => {
     pen += advance;
   }
 
-  return {
+  const layout = {
     
     width: Math.max(0, pen - (glyphs.length > 0 ? extra : 0)),
     ascent: font.ascender * scale,
@@ -86,6 +99,8 @@ export const layoutLine = (font, text, { size, tracking = 0 }) => {
     size,
     glyphs,
   };
+  byFont.set(key, layout);
+  return layout;
 };
 
 export const fitSize = (font, text, { maxWidth, maxSize, tracking = 0 }) => {

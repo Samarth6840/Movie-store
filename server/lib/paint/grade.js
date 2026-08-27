@@ -118,7 +118,11 @@ export const GRADES = [
   },
 ];
 
+const gradeTableCache = new WeakMap();
+
 export const bakeGrade = (grade) => {
+  const cached = gradeTableCache.get(grade);
+  if (cached) return cached;
   const table = new Float32Array(768);
   for (let channel = 0; channel < 3; channel += 1) {
     for (let value = 0; value < 256; value += 1) {
@@ -137,6 +141,7 @@ export const bakeGrade = (grade) => {
       table[channel * 256 + value] = tinted;
     }
   }
+  gradeTableCache.set(grade, table);
   return table;
 };
 

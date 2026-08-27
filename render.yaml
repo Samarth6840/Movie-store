@@ -11,3 +11,13 @@ services:
         value: 10000
       - key: TRAILER_FONT_PATH
         value: fonts
+      - key: TRAILER_CACHE_DIR
+        value: .cache/trailers
+      - key: CLIP_CACHE_DIR
+        value: .cache/clips
+      - key: MAX_TRAILER_CACHE_MB
+        value: "4096"
+      - key: MAX_CLIP_CACHE_MB
+        value: "2048"
+      - key: MAX_CONCURRENT_RENDERS
+        value: "2"
