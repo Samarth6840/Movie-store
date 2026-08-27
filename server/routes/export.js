@@ -53,21 +53,30 @@ router.get('/export', async (req, res) => {
     const archive = archiver('zip', { zlib: { level: 0 } });
     archive.pipe(res);
 
-    for (const movie of result.movies) {
-      try {
-        const buffer = await renderTrailer({
-          seed,
-          localeCode,
-          globalIndex: movie.index - 1,
-          movie,
-          locale,
-          provider: prov,
-        });
-        archive.append(buffer, { name: `${sanitize(movie.title)}.mp4` });
-      } catch {
-        
+    // Render movies concurrently (bounded) so a page of trailers exports much
+    // faster than pure serial, while still leaning on the global worker cap.
+    const LIMIT = 3;
+    const queue = [...result.movies];
+    let cursor = 0;
+    const workers = Array.from({ length: Math.min(LIMIT, queue.length) }, async () => {
+      while (cursor < queue.length) {
+        const movie = queue[cursor++];
+        try {
+          const buffer = await renderTrailer({
+            seed,
+            localeCode,
+            globalIndex: movie.index - 1,
+            movie,
+            locale,
+            provider: prov,
+          });
+          archive.append(buffer, { name: `${sanitize(movie.title)}.mp4` });
+        } catch {
+          // Skip trailers that fail to render rather than aborting the batch.
+        }
       }
-    }
+    });
+    await Promise.all(workers);
 
     await archive.finalize();
   } catch (err) {

@@ -57,15 +57,15 @@ class RenderWorkerPool {
     worker.on('exit', (code) => {
       handle.usable = false;
       this.workers.delete(handle);
-      // A crashed worker may leave a queued task hanging; unblock the next
-      // waiter by handing it to the fallback path if nothing is idle.
+      // Replenish the slot: hand the next waiter a fresh replacement worker so
+      // the concurrency cap stays intact. If spawn fails, hand `null` so the
+      // waiter falls back to an inline render.
       const waiter = this.waiters.shift();
-      if (waiter) waiter(null);
-      if (code !== 0) {
-        // Replacement worker on next acquire (workers.size is now smaller).
-        const next = this.waiters.shift();
-        if (next) {
-          this.#spawn().then(next, () => next(null));
+      if (waiter) {
+        if (!this.stopped) {
+          this.#spawn().then(waiter, () => waiter(null));
+        } else {
+          waiter(null);
         }
       }
     });
@@ -83,9 +83,10 @@ class RenderWorkerPool {
 
   async stop() {
     this.stopped = true;
-    this.workers.clear();
     this.idle.length = 0;
-    for (const handle of [...this.workers]) {
+    const handles = [...this.workers];
+    this.workers.clear();
+    for (const handle of handles) {
       try { await handle.worker.terminate(); } catch { /* noop */ }
     }
   }
@@ -106,6 +107,11 @@ const runTaskInWorker = (handle, type, payload) =>
     const worker = handle.worker;
     const timeout = setTimeout(() => {
       cleanup();
+      handle.usable = false;
+      // A wedged worker never resolves its message handler; recycle it so the
+      // pool doesn't hand the stuck worker out again. `exit` fires and the pool
+      // replaces it for any waiting task.
+      try { worker.terminate(); } catch { /* noop */ }
       reject(new Error(`render worker timed out`));
     }, 300000);
 

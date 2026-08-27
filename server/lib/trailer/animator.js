@@ -53,7 +53,20 @@ const storeGlyphMask = (font, char, size, tracking, scaleBucket, mask) => {
   if (glyphMaskCacheOrder.length > GLYPH_MASK_CACHE_MAX) {
     const evicted = glyphMaskCacheOrder.shift();
     const [ef, ec, ecfg, esb] = evicted;
-    ef && GLYPH_MASK_CACHE.get(ef)?.get(ec)?.get(ecfg)?.delete(esb);
+    const byScale = ef && GLYPH_MASK_CACHE.get(ef)?.get(ec)?.get(ecfg);
+    if (byScale) {
+      byScale.delete(esb);
+      // Prune now-empty nested maps so eviction doesn't leak Map shells.
+      if (byScale.size === 0) {
+        const byChar = GLYPH_MASK_CACHE.get(ef)?.get(ec);
+        byChar?.delete(ecfg);
+        if (byChar?.size === 0) {
+          const byFont = GLYPH_MASK_CACHE.get(ef);
+          byFont?.delete(ec);
+          if (byFont?.size === 0) GLYPH_MASK_CACHE.delete(ef);
+        }
+      }
+    }
   }
 };
 

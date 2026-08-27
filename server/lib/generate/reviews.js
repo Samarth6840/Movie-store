@@ -1,5 +1,5 @@
 
-import { listed, until } from '../../../shared/times.js';
+import { listed } from '../../../shared/times.js';
 
 export const MAX_REVIEWS = 10;
 
@@ -24,10 +24,13 @@ export const reviewFor = (locale, ctx, film, soFar = []) => {
   const tone = entries.length > 0 ? ctx.weighted('tone', entries) : tones[0];
   const lines = locale.reviews[tone];
   const seen = new Set(soFar.map((review) => review.text));
-  const template = until(
-    (attempt) => ctx.pick(`text.${tone}.${attempt}`, lines),
-    (line) => !seen.has(line.replaceAll('{name}', film.director)),
-  );
+  // Prefer a line not already used in this batch; the seeded pick stays above
+  // the `until` retry budget, so a unique line is used whenever one exists.
+  // Falls back to the full set when more reviews are requested than unique
+  // lines exist, in which case a repeat is unavoidable.
+  const candidates = lines.filter((line) => !seen.has(line.replaceAll('{name}', film.director)));
+  const pool = candidates.length > 0 ? candidates : lines;
+  const template = ctx.pick(`text.${tone}.${soFar.length}`, pool);
   const author = ctx.fullName('author', ctx.pick('author.sex', ['male', 'female']));
 
   return {

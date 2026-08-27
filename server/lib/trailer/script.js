@@ -1,6 +1,7 @@
 
 import { SCENE_NAMES, SCENES } from '../scene/scene.js';
 import { GRADES } from '../paint/grade.js';
+import { facesFor } from '../type/fonts.js';
 
 const SHOT_DURATION_MIN = 1.5;
 const SHOT_DURATION_MAX = 2.0;
@@ -37,8 +38,13 @@ export const scriptFor = (ctx, movie, faces = []) => {
   const gradeIndex = ctx.int('grade', 0, GRADES.length - 1);
   const grade = GRADES[gradeIndex];
 
-  const faceIndex = faces.length > 0 ? ctx.int('font', 0, faces.length - 1) : -1;
-  const face = faceIndex >= 0 ? faces[faceIndex].font : null;
+  // Prefer a font that actually covers the title's characters so the title and
+  // end-title cards never render missing-glyph (```.notdef```) boxes. Fall back
+  // to the full library if no face covers it (e.g. an unusual character).
+  const coveringFaces =
+    faces.length > 0 ? (facesFor(faces, movie.title).length > 0 ? facesFor(faces, movie.title) : faces) : faces;
+  const faceIndex = coveringFaces.length > 0 ? ctx.int('font', 0, coveringFaces.length - 1) : -1;
+  const face = faceIndex >= 0 ? coveringFaces[faceIndex].font : null;
 
   const titleAnim = ctx.pick('titleAnim', TITLE_ANIMATIONS);
   const billingStyle = ctx.pick('billing', BILLING_STYLES);
